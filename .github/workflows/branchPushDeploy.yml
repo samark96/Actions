@@ -32,7 +32,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: 'sfdx auth'
         run: |
-          sfdx force:auth:jwt:grant --loglevel ${{ env.logLevel }} --username ${{ env.userName }} --jwt-key-file $(JWTSecretKey.secureFilePath)--client-id ${{ env.consumerKey }} --instance-url ${{ env.instanceURL }} --alias ${{ env.orgAlias }}
+          sfdx force:auth:jwt:grant --loglevel ${{ env.logLevel }} --username ${{ env.userName }} --jwt-key-file $(JWTSecretKey.secureFilePath)--client-id ${{ secret.consumerKey }} --instance-url ${{ env.instanceURL }} --alias ${{ env.orgAlias }}
 
       - name: 'branch deploy'
         run: |
