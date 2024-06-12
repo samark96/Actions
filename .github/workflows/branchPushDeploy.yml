@@ -1,0 +1,39 @@
+# This is a basic workflow to help you get started with Actions
+
+name: branchDeploy
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+    paths:
+      -  'force-app/**'  
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  branch-deployment:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    container:
+    image: salesforce/cli:latest-slim
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: 'checkout source code'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Runs a single command using the runners shell
+      - name: 'sfdx auth'
+        run: |
+          sfdx force:auth:jwt:grant --loglevel ${{ env.logLevel }} --username ${{ env.userName }} --jwt-key-file $(JWTSecretKey.secureFilePath)--client-id ${{ env.consumerKey }} --instance-url ${{ env.instanceURL }} --alias ${{ env.orgAlias }}
+
+      - name: 'branch deploy'
+        run: |
+          sfdx force:source:deploy --loglevel ${{ env.logLevel }} --targetusername ${{ env.orgAlias }} --testlevel ${{ env.testLevel }} --sourcepath ${{ env.sourcePath }} --wait ${{ env.deployWait }}
