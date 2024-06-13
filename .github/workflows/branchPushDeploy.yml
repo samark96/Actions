@@ -26,7 +26,7 @@ jobs:
 
       - name: 'sfdx auth'
         run: |
-          sfdx force:auth:jwt:grant --loglevel ${{ vars.logLevel }} --username ${{ vars.userName }} --jwt-key-file ${{ secrets.secureKey }} --client-id ${{ secrets.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
+          sfdx force:auth:jwt:grant --loglevel ${{ vars.logLevel }} --username ${{ vars.userName }} --jwt-key-file ${{ secrets.secureKey }} --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
 
       - name: 'branch deploy'
         run: |
