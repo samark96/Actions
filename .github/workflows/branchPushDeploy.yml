@@ -20,13 +20,13 @@ jobs:
 
       - name: 'save secret to file'
         run: | 
-          echo $secureKey > secure.key #| iconv -f ascii -t utf08 
-        env:
-          secureKey: ${{ secrets.secureKey }}
+          echo "${{ secrets.secureKey }}" > server.key 
+        #env:
+         # secureKey: ${{ secrets.secureKey }}
 
       - name: 'sfdx auth'
         run: |
-          sfdx force:auth:jwt:grant --username ${{ vars.userName }} --jwt-key-file ${{ secrets.secureKey }} --client-id 3MVG9oFjVm9kgtpinhCPS1pcaEuOyWhiKpXzVfaVrvYWHojJHMd8u83MTgW_XKNiFu6Q4Oq1ZEFIxaiRD3ZQo --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
+          sfdx force:auth:jwt:grant --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ secrets.consumerKey }}--instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
 
       - name: 'branch deploy'
         run: |
