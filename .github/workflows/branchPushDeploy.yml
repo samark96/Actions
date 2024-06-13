@@ -20,7 +20,7 @@ jobs:
 
       - name: 'save secret to file'
         run: | 
-          echo $secureKey > secure.key
+          echo $secureKey | iconv -f ascii -t utf08 > secure.key
         env:
           secureKey: ${{ secrets.secureKey }}
 
