@@ -20,9 +20,7 @@ jobs:
 
       - name: 'save secret to file'
         run: | 
-          echo "${{ secrets.secureKey }}" > server.key 
-        #env:
-         # secureKey: ${{ secrets.secureKey }}
+          echo "${{ secrets.secureKey }}" > server.key
 
       - name: 'sfdx auth'
         run: |
