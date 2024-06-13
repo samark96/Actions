@@ -28,11 +28,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
+      # Store secret to key file
+      - name: save secret to file
+        run: | 
+          echo $secureKey > secure.key
+        env:
+          secureKey: ${{ secrets.secureKey }}
       # Runs a single command using the runners shell
       - name: 'sfdx auth'
         run: |
-          sfdx force:auth:jwt:grant --loglevel ${{ env.logLevel }} --username ${{ env.userName }} --jwt-key-file $(JWTSecretKey.secureFilePath)--client-id ${{ secret.consumerKey }} --instance-url ${{ env.instanceURL }} --alias ${{ env.orgAlias }}
+          sfdx force:auth:jwt:grant --loglevel ${{ env.logLevel }} --username ${{ env.userName }} --jwt-key-file ${{secure.key}}--client-id ${{ secret.consumerKey }} --instance-url ${{ env.instanceURL }} --alias ${{ env.orgAlias }}
 
       - name: 'branch deploy'
         run: |
