@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
     paths:
       -  'force-app/**'  
-  #workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   branch-deployment:
