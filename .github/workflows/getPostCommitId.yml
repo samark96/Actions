@@ -27,4 +27,4 @@ jobs:
 
       - name: 'update Commit Id'
           run: | 
-            echo "${{ vars.fromCommitId }}
+            echo "${{ vars.fromCommitId }}"
