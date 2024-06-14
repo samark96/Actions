@@ -22,4 +22,5 @@ jobs:
 
       - name: 'get commit id'
         run: | 
-          echo $fromCommitId
+          chmod +x ./build/customScripts/incrementalDeploy.sh
+          ./build/customScripts/incrementalDeploy.sh
