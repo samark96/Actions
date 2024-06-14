@@ -5,5 +5,5 @@ echo ""
 echo "latest commit is $latestCommit"
 echo ""
 echo "Last successful commit id is $fromCommitId"
-echo "fromCommitId=$latestCommit" >> "$GITHUB_ENV"
+echo "fromCommitId=${latestCommit}" >> $GITHUB_ENV
 echo "Last successful commit id is $fromCommitId"
