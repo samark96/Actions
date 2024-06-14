@@ -10,8 +10,7 @@ on:
 jobs:
   branch-deployment:
     runs-on: ubuntu-latest
-    env:
-      prod
+    environment: prod
     
     steps:
       - name: 'checkout source code'
