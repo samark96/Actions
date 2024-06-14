@@ -1,6 +1,13 @@
 #! /bin/bash
 
-echo "latest commit id is $latestCommitId"
 echo "latest commit id is $fromCommitId"
 echo ""
-#curl -X PUT -u $bitbucketUserName:$bitbucketPassword "https://api.bitbucket.org/2.0/repositories/$BITBUCKET_WORKSPACE/$BITBUCKET_REPO_SLUG/deployments_config/environments/\{$envUUID\}/variables/\{$varUUID\}" -H 'Content-Type:application/json' -d '{"value":"'$latestCommit'","key":"fromCommit"}'
+#
+#
+curl -L \
+  -X PATCH \
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer $personalToken" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  https://api.github.com/repos/OWNER/REPO/environments/prod/variables/fromCommitId \
+  -d '{"name":"fromCommitId","value":"$fromCommitId"}'
