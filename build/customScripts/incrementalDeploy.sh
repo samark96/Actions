@@ -5,5 +5,5 @@ echo ""
 echo "latest commit is $latestCommit"
 echo ""
 echo "Last successful commit id is $fromCommitId"
-echo "fromCommitId=$latestCommit" >> $GITHUB_ENV
+echo "::set-env name=fromCommitId::$latestCommit"
 echo "Last successful commit id is $fromCommitId"
