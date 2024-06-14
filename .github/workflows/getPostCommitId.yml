@@ -21,4 +21,4 @@ jobs:
 
       - name: 'get commit id'
         run: | 
-          echo "${{ env.fromCommitId }}"
+          echo $fromCommitId
