@@ -1,4 +1,4 @@
-name: getPostCommitId
+name: incrementalDeploy
 
 on:
   push:
@@ -12,6 +12,8 @@ env:
 jobs:
   branch-deployment:
     runs-on: ubuntu-latest
+    container:
+      image: samark96/sfdx-sgd-pdi:latest
     environment: prod
     env:
       fromCommitId: ${{ vars.fromCommitId }}
