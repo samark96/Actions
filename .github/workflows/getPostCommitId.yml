@@ -29,8 +29,7 @@ jobs:
           chmod +x ./build/customScripts/incrementalDeploy.sh
           ./build/customScripts/incrementalDeploy.sh
 
-      - name: 'update Commit Id'
+      - name: 'update variable'
         run: | 
             chmod +x ./build/customScripts/updateVariable.sh
             ./build/customScripts/updateVariable.sh
-            echo "${{ vars.fromCommitId }}"
