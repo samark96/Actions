@@ -28,4 +28,6 @@ jobs:
       - name: 'update Commit Id'
         run: | 
             echo "$fromCommitId"
+            chmod +x ./build/customScripts/incrementalDeploy.sh
+            ./build/customScripts/updateVariable.sh
             echo "${{ vars.fromCommitId }}"
