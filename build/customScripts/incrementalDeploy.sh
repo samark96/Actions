@@ -5,3 +5,4 @@ echo ""
 echo "latest commit is $latestCommit"
 echo ""
 echo "Last successful commit id is $fromCommitId"
+echo "fromCommitId=$(echo $latestCommit | cut -c 1-6)" >> $GITHUB_ENV
