@@ -24,6 +24,8 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install SGD
+        run: echo y | sfdx plugins:install "sfdx-git-delta@${{ vars.SGD_VERSION }}"
       - name: 'incremental deploy'
         run: | 
           chmod +x ./build/customScripts/incrementalDeploy.sh
