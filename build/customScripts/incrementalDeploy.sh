@@ -8,7 +8,7 @@ echo "latest commit id is $latestCommitId"
 echo ""
 echo "Last successful commit id is $fromCommitId"
 echo ""
-sfdx sgd:source:delta --to "$latestCommitId" --from "$fromCommitId" --output "."
+sfdx sgd:source:delta --to $latestCommitId --from $fromCommitId --output "."
 echo ""
 echo ""
 echo "--- package.xml generated with added and modified metadata ---"
@@ -21,5 +21,5 @@ echo ""
 echo ""
 echo ""
 mkdir ./changed-sources
-sfdx sgd:source:delta --to "$latestCommit" --from "$fromCommit" --output changed-sources/ --generate-delta
+sfdx sgd:source:delta --to $latestCommitId --from $fromCommitId --output changed-sources/ --generate-delta
 echo "fromCommitId=${latestCommitId}" >> $GITHUB_ENV
