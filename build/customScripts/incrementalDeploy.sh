@@ -2,15 +2,13 @@
 git config --global --add safe.directory /__w/Actions/Actions
 git config --global user.email "GitHub@mass.gov"
 git config --global user.name "GitHub User"
-sfdx --version
-sfdx plugins --core
 latestCommitId=$(git log -n 1 --pretty=format:"%h" | tail -n 1 2>&1)
 echo ""
 echo "latest commit id is $latestCommitId"
 echo ""
 echo "Last successful commit id is $fromCommitId"
 echo ""
-sfdx sgd:source:delta --to "'$latestCommitId'" --from "'$fromCommitId'" --output "."
+sfdx sgd:source:delta --to ${latestCommitId} --from ${fromCommitId} --output "."
 echo ""
 echo ""
 echo "--- package.xml generated with added and modified metadata ---"
@@ -23,5 +21,5 @@ echo ""
 echo ""
 echo ""
 mkdir ./changed-sources
-sfdx sgd:source:delta --to $latestCommitId --from $fromCommitId --output changed-sources/ --generate-delta
+sfdx sgd:source:delta --to ${latestCommitId} --from ${fromCommitId} --output changed-sources/ --generate-delta
 echo "fromCommitId=${latestCommitId}" >> $GITHUB_ENV
