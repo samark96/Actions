@@ -7,6 +7,8 @@ echo ""
 echo "latest commit id is $latestCommitId"
 echo ""
 echo "Last successful commit id is $fromCommitId"
+
+sfdx plugins --core 
 echo ""
 sfdx sgd:source:delta --to ${latestCommitId} --from ${fromCommitId} --output "."
 echo ""
