@@ -10,4 +10,4 @@ curl -L \
   -H "Authorization: Bearer $personalToken" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
   https://api.github.com/repos/samark96/Actions/environments/prod/variables/fromCommitId \
-  -d '{"name":"fromCommitId","value":"$fromCommitId"}'
+  -d '{"name":"fromCommitId","value":"${fromCommitId}"}'
