@@ -24,7 +24,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 'get commit id'
+      - name: 'incremental deploy'
         run: | 
           chmod +x ./build/customScripts/incrementalDeploy.sh
           ./build/customScripts/incrementalDeploy.sh

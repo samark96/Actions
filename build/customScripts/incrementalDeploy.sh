@@ -1,5 +1,7 @@
 #! /bin/bash
 
+git config --global user.email "GitHub@mass.gov"
+git config --global user.name "GitHub User"
 latestCommitId=$(git log -n 1 --pretty=format:"%h" | tail -n 1 2>&1)
 echo ""
 echo "latest commit id is $latestCommitId"
