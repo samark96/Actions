@@ -13,7 +13,7 @@ jobs:
   branch-deployment:
     runs-on: ubuntu-latest
     container:
-      image: samark96/sfdx-sgd-pdi:latest
+      image: mehdisfdc/sfdx-cli-gitlab #samark96/sfdx-sgd-pdi:latest
     environment: prod
     env:
       fromCommitId: ${{ vars.fromCommitId }}
