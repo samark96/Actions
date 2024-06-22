@@ -1,5 +1,5 @@
 
-Write-Host "latest commit id is $env:latestCommitId"
+Write-Host "latest commit id is ${{ env:latestCommitId }}"
 Write-Host ""
 #
 #
