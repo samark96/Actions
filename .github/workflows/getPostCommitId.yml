@@ -33,7 +33,7 @@ jobs:
 
       - name: 'installSFCLI'
         run: |
-          choco install salesforce-cli -y
+          npm install salesforce-cli -g
 
       - name: 'sfAuth'
         run: |
