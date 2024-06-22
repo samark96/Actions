@@ -34,14 +34,9 @@ jobs:
       - name: Extract Salesforce CLI
         run: |
           tar -xzvf build/sf-win32-x64.tar.gz
-  
-      - name: Test Salesforce CLI
-        run: |
-          ./sf/bin/sf --version
-          ./sf/bin/sf plugins --core
-      
+
       - name: 'sfAuth'
-        shell: pwsh
+        #shell: pwsh
         run: |
           ./sf/bin/sf org login jwt --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
 
