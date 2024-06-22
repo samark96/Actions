@@ -27,22 +27,21 @@ jobs:
         run: |
           ./build/customScripts/incrementalDeploy.ps1
       
-      - name: 'check Docker Image'
-        run: |
-          docker run --rm -v ${PWD}:/workspace -w /workspace salesforce/cli:latest-slim 
-          echo "Salesforce CLI container is ready"
-      
       - name: 'exportSecret'
         run: |
           echo "${{ secrets.secureKey }}" > server.key
 
+      - name: 'installSFCLI'
+        run: |
+          choco install salesforce-cli -y
+
       - name: 'sfAuth'
         run: |
-          docker run --rm -v ${PWD}:/workspace -w /workspace salesforce/cli:latest-slim sfdx force:auth:jwt:grant --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
+          sfdx force:auth:jwt:grant --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
 
       - name: 'incrementalDeploy'
         run: |
-          docker run --rm -v ${PWD}:/workspace -w /workspace salesforce/cli:latest-slim sfdx force:source:deploy --loglevel ${{ vars.logLevel }} --targetusername ${{ vars.orgAlias }} --testlevel ${{ vars.testLevel }} --sourcepath ${{ vars.sourcePath }} --wait ${{ vars.deployWait }}
+          sfdx force:source:deploy --loglevel ${{ vars.logLevel }} --targetusername ${{ vars.orgAlias }} --testlevel ${{ vars.testLevel }} --sourcepath ${{ vars.sourcePath }} --wait ${{ vars.deployWait }}
 
       - name: 'updateVariable'
         run: |
