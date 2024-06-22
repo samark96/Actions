@@ -43,7 +43,7 @@ jobs:
       - name: 'sfAuth'
         shell: pwsh
         run: |
-          ./sf/bin/sf auth:jwt:grant --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
+          ./sf/bin/sf org login jwt --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
 
       - name: 'incrementalDeploy'
         shell: pwsh
