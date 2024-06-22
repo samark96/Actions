@@ -33,21 +33,20 @@ jobs:
 
       - name: Extract Salesforce CLI
         run: |
-          mkdir sfCLI
-          tar -xzvf build/sf-win32-x64.tar.gz -C sfCLI --strip-components=1
+          tar -xzvf build/sf-win32-x64.tar.gz
   
       - name: Test Salesforce CLI
         run: |
-          ./sfCLI/bin/sfdx --version
-          ./sfCLI/bin/sfdx plugins --core
+          ./sf/bin/sf --version
+          ./sf/bin/sf plugins --core
       
       - name: 'sfAuth'
         run: |
-          ./sfCLI/bin/sfdx force:auth:jwt:grant --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
+          ./sf/bin/sfdx force:auth:jwt:grant --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
 
       - name: 'incrementalDeploy'
         run: |
-          ./sfCLI/bin/sfdx force:source:deploy --loglevel ${{ vars.logLevel }} --targetusername ${{ vars.orgAlias }} --testlevel ${{ vars.testLevel }} --sourcepath ${{ vars.sourcePath }} --wait ${{ vars.deployWait }}
+          ./sf/bin/sfdx force:source:deploy --loglevel ${{ vars.logLevel }} --targetusername ${{ vars.orgAlias }} --testlevel ${{ vars.testLevel }} --sourcepath ${{ vars.sourcePath }} --wait ${{ vars.deployWait }}
 
       - name: 'updateVariable'
         run: |
