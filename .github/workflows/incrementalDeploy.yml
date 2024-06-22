@@ -33,7 +33,7 @@ jobs:
 
       - name: Extract Salesforce CLI
         run: |
-          mkdir sf-cli
+          mkdir sfCLI
           tar -xzvf build/sf-win32-x64.tar.gz -C sfCLI
   
       - name: Install Salesforce CLI
