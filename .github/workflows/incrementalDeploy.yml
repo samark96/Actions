@@ -48,7 +48,7 @@ jobs:
       - name: 'incrementalDeploy'
         shell: pwsh
         run: |
-          ./sf/bin/sf project deploy --loglevel ${{ vars.logLevel }} --targetusername ${{ vars.orgAlias }} --testlevel ${{ vars.testLevel }} --sourcepath ${{ vars.sourcePath }} --wait ${{ vars.deployWait }}
+          ./sf/bin/sf project deploy start --loglevel ${{ vars.logLevel }} --targetusername ${{ vars.orgAlias }} --testlevel ${{ vars.testLevel }} --sourcepath ${{ vars.sourcePath }} --wait ${{ vars.deployWait }}
 
       - name: 'updateVariable'
         run: |
