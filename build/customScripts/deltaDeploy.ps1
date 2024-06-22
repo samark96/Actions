@@ -7,5 +7,5 @@ $latestCommitId = git log -n 1 --pretty=format:"%h" #$latestCommit.Substring(0, 
 Write-Host " "
 Write-Host "Latest Commit Id is : $latestCommitId"
 Write-Host ""
-Write-Host "Last successful commit id is $Env:fromCommitId"
-Write-Host "fromCommitId=${latestCommitId}" >> $GITHUB_ENV
+Write-Host "Last successful commit id is $env:fromCommitId"
+Write-Host "latestCommitId=${latestCommitId}" >> $GITHUB_ENV
