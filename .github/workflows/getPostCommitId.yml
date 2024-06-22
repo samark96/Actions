@@ -31,21 +31,24 @@ jobs:
         run: |
           echo "${{ secrets.secureKey }}" > server.key
 
-      - name: Download Salesforce CLI Installer
+      - name: Extract Salesforce CLI
         run: |
-          curl -o ./salesforce-cli-installer.exe https://developer.salesforce.com/media/salesforce-cli/sfdx-cli/channels/stable/sfdx-cli-windows-amd64.exe
+          mkdir sf-cli
+          tar -xzvf build/sf-win32-x64.tar.gz -C sfCLI
   
       - name: Install Salesforce CLI
         run: |
-          ./salesforce-cli-installer.exe /s  # Silent install
-
+          ./sfCLI/install.bat
+          ./sfCLI/sfdx --version
+          ./sfCLI/sfdx plugins --core
+      
       - name: 'sfAuth'
         run: |
-          sfdx force:auth:jwt:grant --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
+          ./sfCLI/sfdx force:auth:jwt:grant --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
 
       - name: 'incrementalDeploy'
         run: |
-          sfdx force:source:deploy --loglevel ${{ vars.logLevel }} --targetusername ${{ vars.orgAlias }} --testlevel ${{ vars.testLevel }} --sourcepath ${{ vars.sourcePath }} --wait ${{ vars.deployWait }}
+          ./sfCLI/sfdx force:source:deploy --loglevel ${{ vars.logLevel }} --targetusername ${{ vars.orgAlias }} --testlevel ${{ vars.testLevel }} --sourcepath ${{ vars.sourcePath }} --wait ${{ vars.deployWait }}
 
       - name: 'updateVariable'
         run: |
