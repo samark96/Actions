@@ -31,14 +31,13 @@ jobs:
         run: |
           echo "${{ secrets.secureKey }}" > server.key
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14' 
-
-      - name: 'installSFCLI'
+      - name: Download Salesforce CLI Installer
         run: |
-          npm install salesforce-cli -g
+          curl -o ./salesforce-cli-installer.exe https://developer.salesforce.com/media/salesforce-cli/sfdx-cli/channels/stable/sfdx-cli-windows-amd64.exe
+  
+      - name: Install Salesforce CLI
+        run: |
+          ./salesforce-cli-installer.exe /s  # Silent install
 
       - name: 'sfAuth'
         run: |
