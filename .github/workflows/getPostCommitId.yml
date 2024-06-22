@@ -11,7 +11,7 @@ env:
 
 jobs:
   branch-deployment:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     container:
       image: salesforce/cli:latest-slim
     environment: prod
@@ -26,11 +26,9 @@ jobs:
 
       - name: 'incremental deploy'
         shell: pwsh
-        run: | 
-          chmod +x ./build/customScripts/incrementalDeploy.ps1
+        run: |
           ./build/customScripts/incrementalDeploy.ps1
 
       - name: 'update variable'
-        run: | 
-            chmod +x ./build/customScripts/updateVariable.sh
-            ./build/customScripts/updateVariable.sh
+        run: |
+          ./build/customScripts/updateVariable.ps1
