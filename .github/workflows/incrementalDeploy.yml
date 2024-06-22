@@ -41,10 +41,12 @@ jobs:
           ./sf/bin/sf plugins --core
       
       - name: 'sfAuth'
+        shell: pwsh
         run: |
-          ./sf/bin/sfdx force:auth:jwt:grant --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
+          ./sf/bin/sf auth:jwt:grant --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
 
       - name: 'incrementalDeploy'
+        shell: pwsh
         run: |
           ./sf/bin/sfdx force:source:deploy --loglevel ${{ vars.logLevel }} --targetusername ${{ vars.orgAlias }} --testlevel ${{ vars.testLevel }} --sourcepath ${{ vars.sourcePath }} --wait ${{ vars.deployWait }}
 
