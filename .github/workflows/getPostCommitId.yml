@@ -27,9 +27,10 @@ jobs:
       - name: Install SGD
         run: echo y | sfdx plugins:install "sfdx-git-delta@${{ vars.SGD_VERSION }}"
       - name: 'incremental deploy'
+        shell: pwsh
         run: | 
-          chmod +x ./build/customScripts/incrementalDeploy.sh
-          ./build/customScripts/incrementalDeploy.sh
+          chmod +x ./build/customScripts/incrementalDeploy.ps1
+          ./build/customScripts/incrementalDeploy.ps1
 
       - name: 'update variable'
         run: | 
