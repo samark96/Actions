@@ -1,5 +1,7 @@
-
-Write-Host "latest commit id is '${{ env:latestCommitId }}'"
+param(
+    [string]$commitId
+)
+Write-Host "latest commit id is $commitId"
 Write-Host ""
 #
 #

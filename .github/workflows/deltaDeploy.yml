@@ -52,4 +52,6 @@ jobs:
       - name: updateVariable
         shell: pwsh
         run: |
-          ./build/customScripts/updateVariable.ps1
+          $latestCommitId = $env:latestCommitId
+          Write-Host "Latest commit ID: $latestCommitId"
+          ./build/customScripts/updateVariable.ps1 -commitId $latestCommitId
