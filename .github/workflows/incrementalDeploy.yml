@@ -38,16 +38,16 @@ jobs:
   
       - name: Test Salesforce CLI
         run: |
-          ./sfCLI/sf/bin/sfdx --version
-          ./sfCLI/sf/bin/sfdx plugins --core
+          ./sfCLI/bin/sfdx --version
+          ./sfCLI/bin/sfdx plugins --core
       
       - name: 'sfAuth'
         run: |
-          ./sfCLI/sf/bin/sfdx force:auth:jwt:grant --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
+          ./sfCLI/bin/sfdx force:auth:jwt:grant --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
 
       - name: 'incrementalDeploy'
         run: |
-          ./sfCLI/sf/bin/sfdx force:source:deploy --loglevel ${{ vars.logLevel }} --targetusername ${{ vars.orgAlias }} --testlevel ${{ vars.testLevel }} --sourcepath ${{ vars.sourcePath }} --wait ${{ vars.deployWait }}
+          ./sfCLI/bin/sfdx force:source:deploy --loglevel ${{ vars.logLevel }} --targetusername ${{ vars.orgAlias }} --testlevel ${{ vars.testLevel }} --sourcepath ${{ vars.sourcePath }} --wait ${{ vars.deployWait }}
 
       - name: 'updateVariable'
         run: |
