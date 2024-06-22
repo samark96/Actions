@@ -35,13 +35,11 @@ jobs:
         run: |
           tar -xzvf build/sf-win32-x64.tar.gz
 
-      - name: 'sfAuth'
-        #shell: pwsh
+      - name: 'sfJWTAuth'
         run: |
           ./sf/bin/sf org login jwt --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
 
       - name: 'incrementalDeploy'
-        shell: pwsh
         run: |
           ./sf/bin/sf project deploy start -o ${{ vars.orgAlias }} -l ${{ vars.testLevel }} --source-dir ${{ vars.sourcePath }} -w ${{ vars.deployWait }}
 
