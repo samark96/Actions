@@ -1,4 +1,4 @@
-name: incrementalDeploy
+name: deltaDeploy
 
 on:
   push:
@@ -17,32 +17,33 @@ jobs:
       fromCommitId: ${{ vars.fromCommitId }}
     
     steps:
-      - name: 'checkout source code'
+      - name: checkoutSourceCode
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: 'getChanges'
+      - name: getChanges
         shell: pwsh
         run: |
           ./build/customScripts/incrementalDeploy.ps1
       
-      - name: 'exportSecret'
+      - name: exportSecret
         run: |
           echo "${{ secrets.secureKey }}" > server.key
 
-      - name: Extract Salesforce CLI
+      - name: extractSFCLI
         run: |
           tar -xzvf build/sf-win32-x64.tar.gz
 
-      - name: 'sfJWTAuth'
+      - name: sfJWTAuth
         run: |
           ./sf/bin/sf org login jwt --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
 
-      - name: 'incrementalDeploy'
+      - name: deltaDeploy
         run: |
           ./sf/bin/sf project deploy start -o ${{ vars.orgAlias }} -l ${{ vars.testLevel }} --source-dir ${{ vars.sourcePath }} -w ${{ vars.deployWait }}
 
-      - name: 'updateVariable'
+      - name: updateVariable
+        shell: pwsh
         run: |
           ./build/customScripts/updateVariable.ps1
