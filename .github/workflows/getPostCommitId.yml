@@ -13,7 +13,7 @@ jobs:
   branch-deployment:
     runs-on: ubuntu-latest
     container:
-      image: samark96/sfdx-sgd-pdi:latest
+      image: salesforce/cli:latest-slim
     environment: prod
     env:
       fromCommitId: ${{ vars.fromCommitId }}
@@ -24,8 +24,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install SGD
-        run: echo y | sfdx plugins:install "sfdx-git-delta@${{ vars.SGD_VERSION }}"
       - name: 'incremental deploy'
         shell: pwsh
         run: | 
