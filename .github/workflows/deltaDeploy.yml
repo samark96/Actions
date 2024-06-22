@@ -10,7 +10,7 @@ env:
   personalToken: ${{ secrets.personalToken }}
 
 jobs:
-  incrementalDeploy:
+  deltaDeploy:
     runs-on: windows-latest
     environment: prod
     env:
@@ -25,7 +25,7 @@ jobs:
       - name: getChanges
         shell: pwsh
         run: |
-          ./build/customScripts/incrementalDeploy.ps1
+          ./build/customScripts/deltaDeploy.ps1
       
       - name: exportSecret
         run: |
