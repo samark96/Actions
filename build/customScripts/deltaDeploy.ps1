@@ -5,4 +5,4 @@ Write-Host " "
 Write-Host "Latest Commit Id is : $latestCommitId"
 Write-Host ""
 Write-Host "Last successful commit id is $env:fromCommitId"
-Write-Host "latestCommitId=${latestCommitId}" >> $env:GITHUB_ENV
+"latestCommitId=${latestCommitId}" >> $env:GITHUB_ENV
