@@ -48,7 +48,7 @@ jobs:
       - name: 'incrementalDeploy'
         shell: pwsh
         run: |
-          ./sf/bin/sf project deploy start -o ${{ vars.orgAlias }} -l ${{ vars.testLevel }} -p ${{ vars.sourcePath }} -w ${{ vars.deployWait }}
+          ./sf/bin/sf project deploy start -o ${{ vars.orgAlias }} -l ${{ vars.testLevel }} --source-dir ${{ vars.sourcePath }} -w ${{ vars.deployWait }}
 
       - name: 'updateVariable'
         run: |
