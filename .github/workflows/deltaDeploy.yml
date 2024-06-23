@@ -36,6 +36,11 @@ jobs:
         run: |
           ./build/customScripts/getChanges.ps1
       
+      - name: processChanges
+        shell: pwsh
+        run: |
+          ./build/customScripts/packageChanges.ps1
+      
       - name: exportSecret
         run: |
           echo "${{ secrets.secureKey }}" > server.key
