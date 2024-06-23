@@ -37,6 +37,16 @@ jobs:
         run: |
           echo "$env:secureKey" > secure.key
           dir
+          set FILE_PATH=.\server.key
+        
+          if exist "%FILE_PATH%" (
+          echo File exists: "%FILE_PATH%"
+          echo Checking permissions:
+          echo ---------------------
+          icacls "%FILE_PATH%"
+          ) else (
+          echo File does not exist: "%FILE_PATH%"
+          )
 
       - name: extractSFCLI
         run: |
