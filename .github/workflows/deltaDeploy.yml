@@ -3,8 +3,8 @@ name: deltaDeploy
 on:
   push:
     branches: [ "main" ]
-    #paths:
-    #  -  'force-app/**'  
+    paths:
+      -  'force-app/**'  
   workflow_dispatch:
 env:
   #personalToken: 
