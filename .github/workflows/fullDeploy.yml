@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to trigger deployment against'
+        description: 'Deployment Environment'
         type: environment
         required: true
 
