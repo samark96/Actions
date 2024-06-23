@@ -36,7 +36,7 @@ jobs:
         run: |
           ./build/customScripts/getChanges.ps1
       
-      - name: processChanges
+      - name: packageChanges
         shell: pwsh
         run: |
           ./build/customScripts/packageChanges.ps1
