@@ -19,7 +19,7 @@ jobs:
       testLevel: ${{ vars.testLevel }}
       sourcePath: ${{ vars.sourcePath }}
       deployWait: ${{ vars.deployWait }}
-      #secureKey:
+      secureKey: ${{ secrets.secureKey }}
 
     steps:
       - name: checkoutSourceCode
@@ -34,11 +34,9 @@ jobs:
           git config --global user.name "GitHub User"
       
       - name: exportSecret
-        env:
-          KEYSTORE_BASE64: ${{ secrets.secureKey }}
         run: |
+          echo "$env:secureKey" > secure.key
           dir
-          echo $KEYSTORE_BASE64 > data.b64 && certutil -decode data.b64 secure.key
 
       - name: extractSFCLI
         run: |
