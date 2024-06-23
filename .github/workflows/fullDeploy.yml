@@ -35,7 +35,8 @@ jobs:
       
       - name: exportSecret
         run: |
-          $base64Encoded = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($secureKey))
+          $stringtoEncode = $env:secureKey
+          $base64Encoded = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($stringtoEncode))
           powershell -command "try { [Convert]::FromBase64String('%base64Encoded%') > $null; 'The string is base64 encoded.' } catch { 'The string is not base64 encoded.' }"
           echo $base64Encoded > data.b64 && certutil -decode data.b64 server.key
 
