@@ -19,6 +19,7 @@ jobs:
       testLevel: ${{ vars.testLevel }}
       sourcePath: ${{ vars.sourcePath }}
       deployWait: ${{ vars.deployWait }}
+      secureKey: ${{ secrets.secureKey }}
 
     steps:
       - name: checkoutSourceCode
@@ -34,7 +35,7 @@ jobs:
       
       - name: exportSecret
         run: |
-          echo "${{ secrets.secureKey }}" > server.key
+          echo "$secureKey" > server.key
 
       - name: extractSFCLI
         run: |
@@ -47,5 +48,4 @@ jobs:
       - name: deltaDeploy
         shell: pwsh
         run: |
-          $specifiedClasses = Get-Content -Path './build/specifyTestClasses.txt' -Raw
           ./sf/bin/sf project deploy start -o $orgAlias -l $testLevel --source-dir $sourcePath -w $deployWait
