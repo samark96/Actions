@@ -7,23 +7,30 @@ on:
       -  'force-app/**'  
   workflow_dispatch:
 env:
-  #personalToken: 
   GH_TOKEN: ${{ secrets.githubCLI }}
 
 jobs:
   deltaDeploy:
     runs-on: windows-latest
-    environment: prod
+    environment: qa #pass it in a variable if manually triggered.
     env:
       fromCommitId: ${{ vars.fromCommitId }}
-    
+      userName: ${{ vars.userName }}
+      consumerKey: ${{ vars.consumerKey }}
+      instanceURL: ${{ vars.instanceURL }}
+      orgAlias: ${{ vars.orgAlias }}
+      deltaDeploytestLevel: ${{ vars.deltaDeploytestLevel }}
+      targetPath: ${{ vars.targetPath }}
+      deployWait: ${{ vars.deployWait }}
+      secureKey: ${{ secrets.secureKey }}
+
     steps:
       - name: checkoutSourceCode
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: setupGIT
+      - name: configureGIT
         run: |
           git config --global --add safe.directory /__w/Actions/Actions
           git config --global user.email "GitHub@mass.gov"
@@ -38,10 +45,6 @@ jobs:
         shell: pwsh
         run: |
           ./build/customScripts/packageChanges.ps1
-      
-      - name: exportSecret
-        run: |
-          echo "${{ secrets.secureKey }}" > server.key
 
       - name: extractSFCLI
         run: |
@@ -49,15 +52,16 @@ jobs:
 
       - name: sfJWTAuth
         run: |
-          ./sf/bin/sf org login jwt --username ${{ vars.userName }} --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url ${{ vars.instanceURL }} --alias ${{ vars.orgAlias }}
+          echo "$env:secureKey" > secure.key
+          ./sf/bin/sf org login jwt --username ${{ env.userName }} --jwt-key-file=secure.key --client-id ${{ env.consumerKey }} --instance-url ${{ env.instanceURL }} --alias ${{ env.orgAlias }}
 
       - name: deltaDeploy
         shell: pwsh
         run: |
           $specifiedClasses = Get-Content -Path './build/specifyTestClasses.txt' -Raw
-          ./sf/bin/sf project deploy start -o ${{ vars.orgAlias }} -l ${{ vars.testLevel }} --tests "$specifiedClasses" --source-dir ${{ vars.sourcePath }} -w ${{ vars.deployWait }}
+          ./sf/bin/sf project deploy start -o ${{ env.orgAlias }} -l ${{ env.deltaDeploytestLevel }} --tests "$specifiedClasses" --source-dir ${{ env.targetPath }} -w ${{ env.deployWait }}
 
       - name: updateVariable
         shell: pwsh
         run: |
-          gh variable set fromCommitId --body "$env:latestCommitId" --env prod        
+          gh variable set fromCommitId --body "$env:latestCommitId" --env qa        
