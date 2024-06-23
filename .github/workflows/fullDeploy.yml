@@ -44,8 +44,8 @@ jobs:
 
       - name: sfJWTAuth
         run: |
-          echo "client id is: $consumerKey"
-          ./sf/bin/sf org login jwt --username $userName --jwt-key-file=server.key --client-id $consumerKey --instance-url $instanceURL --alias $orgAlias
+          echo "client id is: ${{ vars.consumerKey }}"
+          ./sf/bin/sf org login jwt --username $userName --jwt-key-file=server.key --client-id ${{ vars.consumerKey }} --instance-url $instanceURL --alias $orgAlias
 
       - name: deltaDeploy
         shell: pwsh
