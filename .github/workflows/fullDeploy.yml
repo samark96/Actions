@@ -8,25 +8,44 @@ on:
   workflow_dispatch:
 
 jobs:
-  branch-deployment:
-    runs-on: ubuntu-latest
+  fullDeploy:
+    runs-on: windows-latest
     environment: prod
-    container:
-      image: salesforce/cli:latest-slim
+    env:
+      userName: ${{ vars.userName }}
+      clientId: ${{ vars.consumerKey }}
+      instanceURL: ${{ vars.instanceURL }}
+      orgAlias: ${{ vars.orgAlias }}
+      testLevel: ${{ vars.testLevel }}
+      sourcePath: ${{ vars.sourcePath }}
+      deployWait: ${{ vars.deployWait }}
+
     steps:
-      - name: 'checkout source code'
+      - name: checkoutSourceCode
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: 'save secret to file'
-        run: | 
+      - name: setupGIT
+        run: |
+          git config --global --add safe.directory /__w/Actions/Actions
+          git config --global user.email "GitHub@mass.gov"
+          git config --global user.name "GitHub User"
+      
+      - name: exportSecret
+        run: |
           echo "${{ secrets.secureKey }}" > server.key
 
-      - name: 'sfdx auth'
+      - name: extractSFCLI
         run: |
-          sfdx force:auth:jwt:grant --username ${{ env.userName }} --jwt-key-file=server.key --client-id ${{ env.consumerKey }} --instance-url ${{ env.instanceURL }} --alias ${{ env.orgAlias }}
+          tar -xzvf build/sf-win32-x64.tar.gz
 
-      - name: 'branch deploy'
+      - name: sfJWTAuth
         run: |
-          sfdx force:source:deploy --targetusername ${{ env.orgAlias }} --testlevel ${{ env.testLevel }} --sourcepath ${{ vars.sourcePath }} --wait ${{ vars.deployWait }}
+          ./sf/bin/sf org login jwt --username $userName --jwt-key-file=server.key --client-id $clientId --instance-url $instanceURL --alias $orgAlias
+
+      - name: deltaDeploy
+        shell: pwsh
+        run: |
+          $specifiedClasses = Get-Content -Path './build/specifyTestClasses.txt' -Raw
+          ./sf/bin/sf project deploy start -o $orgAlias -l $testLevel --source-dir $sourcePath -w $deployWait
