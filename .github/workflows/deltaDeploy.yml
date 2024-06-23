@@ -2,7 +2,7 @@ name: deltaDeploy
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "deltaDeploy" ]
     paths:
       -  'force-app/**'  
   workflow_dispatch:
