@@ -13,7 +13,9 @@ env:
 jobs:
   deltaDeploy:
     runs-on: windows-latest
-    environment: prod
+    strategy:
+      matrix:
+        environment: [prod]
     env:
       fromCommitId: ${{ vars.fromCommitId }}
     
@@ -53,6 +55,6 @@ jobs:
       - name: updateVariable
         shell: pwsh
         run: |
-          gh variable set fromCommitId --body "$env:latestCommitId" --env "$GITHUB_ENVIRONMENT"
+          gh variable set fromCommitId --body "$env:latestCommitId" --env ${{ matrix.environment }}
 #$latestCommit = $env:latestCommitId
 #./build/customScripts/updateVariable.ps1 -commitId $latestCommit          
