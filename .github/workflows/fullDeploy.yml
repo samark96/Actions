@@ -19,7 +19,7 @@ jobs:
       testLevel: ${{ vars.testLevel }}
       sourcePath: ${{ vars.sourcePath }}
       deployWait: ${{ vars.deployWait }}
-      secureKey: ${{ secrets.secureKey }}
+      #secureKey:
 
     steps:
       - name: checkoutSourceCode
@@ -34,11 +34,11 @@ jobs:
           git config --global user.name "GitHub User"
       
       - name: exportSecret
+        env:
+          KEYSTORE_BASE64: ${{ secrets.secureKey }}
         run: |
-          $stringtoEncode = $env:secureKey
-          $base64Encoded = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($stringtoEncode))
-          powershell -command "try { [Convert]::FromBase64String('%base64Encoded%') > $null; 'The string is base64 encoded.' } catch { 'The string is not base64 encoded.' }"
-          echo $base64Encoded > data.b64 && certutil -decode data.b64 server.key
+          dir
+          echo $KEYSTORE_BASE64 > data.b64 && certutil -decode data.b64 secure.key
 
       - name: extractSFCLI
         run: |
@@ -46,6 +46,7 @@ jobs:
 
       - name: sfJWTAuth
         run: |
+          dir
           ./sf/bin/sf org login jwt --username $userName --jwt-key-file=server.key --client-id $clientId --instance-url $instanceURL --alias $orgAlias
 
       - name: deltaDeploy
