@@ -12,8 +12,7 @@ env:
 jobs:
   deltaDeploy:
     runs-on: windows-latest
-    environment: 
-      name: qa
+    environment: qa
     env:
       fromCommitId: ${{ vars.fromCommitId }}
       userName: ${{ vars.userName }}
