@@ -53,7 +53,8 @@ jobs:
       - name: updateVariable
         shell: pwsh
         run: |
-          gh variable set fromCommitId --body "$env:latestCommitId" --env prod
+          gh variable set fromCommitId --body "$env:latestCommitId"
+#--env prod
 #$latestCommit = $env:latestCommitId
 #./build/customScripts/updateVariable.ps1 -commitId $latestCommit
           
