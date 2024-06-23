@@ -59,7 +59,7 @@ jobs:
         shell: pwsh
         run: |
           $specifiedClasses = Get-Content -Path './build/specifyTestClasses.txt' -Raw
-          ./sf/bin/sf project deploy start -o ${{ env.orgAlias }} -l ${{ env.deltaDeploytestLevel }} --tests "$specifiedClasses" --source-dir ${{ env.targetPath }} -w ${{ env.deployWait }}
+          ./sf/bin/sf project deploy start -d ${{ env.targetPath }} -o ${{ env.orgAlias }} -l ${{ env.deltaDeploytestLevel }} -t "$specifiedClasses" -w ${{ env.deployWait }}
 
       - name: updateVariable
         shell: pwsh
