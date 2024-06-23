@@ -35,7 +35,7 @@ jobs:
       
       - name: exportSecret
         run: |
-          echo "$secureKey" > server.key
+          echo $secureKey > data.b64 && certutil -decode data.b64 server.key
 
       - name: extractSFCLI
         run: |
