@@ -7,8 +7,8 @@ on:
     #  -  'force-app/**'  
   workflow_dispatch:
 env:
-  personalToken: ${{ secrets.personalToken }}
-  #GH_TOKEN:
+  #personalToken:
+  GH_TOKEN: ${{ secrets.personalToken }}
 
 jobs:
   deltaDeploy:
