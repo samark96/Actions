@@ -1,19 +1,20 @@
 name: fullDeploy
 
 on:
-  push:
-    branches: [ "main" ]
-    paths:
-      -  'force-app/**'  
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment Environment'
+        type: environment
+        required: true
 
 jobs:
   fullDeploy:
     runs-on: windows-latest
-    environment: prod
+    environment: ${{ github.event.inputs.environment }}
     env:
       userName: ${{ vars.userName }}
-      clientId: ${{ vars.consumerKey }}
+      consumerKey: ${{ vars.consumerKey }}
       instanceURL: ${{ vars.instanceURL }}
       orgAlias: ${{ vars.orgAlias }}
       testLevel: ${{ vars.testLevel }}
@@ -27,16 +28,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: setupGIT
+      - name: configureGIT
         run: |
           git config --global --add safe.directory /__w/Actions/Actions
           git config --global user.email "GitHub@mass.gov"
           git config --global user.name "GitHub User"
-      
-      - name: exportSecret
-        run: |
-          powershell -command "try { [Convert]::FromBase64String('%secureKey%') > $null; 'The string is base64 encoded.' } catch { 'The string is not base64 encoded.' }"
-          echo $secureKey > data.b64 && certutil -decode data.b64 server.key
 
       - name: extractSFCLI
         run: |
@@ -44,9 +40,10 @@ jobs:
 
       - name: sfJWTAuth
         run: |
-          ./sf/bin/sf org login jwt --username $userName --jwt-key-file=server.key --client-id $clientId --instance-url $instanceURL --alias $orgAlias
+          echo "$env:secureKey" > secure.key
+          ./sf/bin/sf org login jwt --username ${{ env.userName }} --jwt-key-file=secure.key --client-id ${{ env.consumerKey }} --instance-url ${{ env.instanceURL }} --alias ${{ env.orgAlias }}
 
-      - name: deltaDeploy
+      - name: sfDeploy
         shell: pwsh
         run: |
-          ./sf/bin/sf project deploy start -o $orgAlias -l $testLevel --source-dir $sourcePath -w $deployWait
+          ./sf/bin/sf project deploy start -o ${{ env.orgAlias }} -l ${{ env.testLevel }} --source-dir ${{ env.sourcePath }} -w ${{ env.deployWait }}
