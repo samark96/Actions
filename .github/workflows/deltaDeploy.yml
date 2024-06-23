@@ -34,7 +34,7 @@ jobs:
       - name: getChanges
         shell: pwsh
         run: |
-          ./build/customScripts/deltaDeploy.ps1
+          ./build/customScripts/getChanges.ps1
       
       - name: exportSecret
         run: |

@@ -1,0 +1,7 @@
+{
+    "force-app": {
+           
+           "DataDictionaryFields_Batch": "HelloWorldTrigger",
+           "DataDictionaryObjects": "DataDictionarySchedule_Batch,HttpClass,HelloWorldTrigger"
+       }
+  }
