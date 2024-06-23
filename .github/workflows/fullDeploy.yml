@@ -47,5 +47,4 @@ jobs:
       - name: deltaDeploy
         shell: pwsh
         run: |
-          $specifiedClasses = Get-Content -Path './build/specifyTestClasses.txt' -Raw
           ./sf/bin/sf project deploy start -o $orgAlias -l $testLevel --source-dir $sourcePath -w $deployWait
