@@ -9,6 +9,7 @@ on:
 env:
   #personalToken: 
   GH_TOKEN: ${{ secrets.githubCLI }}
+  latestCommitId: ${{ github.sha }}
 
 jobs:
   deltaDeploy:
@@ -53,7 +54,7 @@ jobs:
       - name: updateVariable
         shell: pwsh
         run: |
-          gh variable set --env fromCommitId={{ $env:latestCommitId }}
+          gh variable set --env fromCommitId=${{ env:latestCommitId }}
 #$latestCommit = $env:latestCommitId
 #./build/customScripts/updateVariable.ps1 -commitId $latestCommit
           
