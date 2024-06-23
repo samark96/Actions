@@ -35,8 +35,9 @@ jobs:
       
       - name: exportSecret
         run: |
-          powershell -command "try { [Convert]::FromBase64String('%secureKey%') > $null; 'The string is base64 encoded.' } catch { 'The string is not base64 encoded.' }"
-          echo $secureKey > data.b64 && certutil -decode data.b64 server.key
+          $base64Encoded = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($secureKey))
+          powershell -command "try { [Convert]::FromBase64String('%base64Encoded%') > $null; 'The string is base64 encoded.' } catch { 'The string is not base64 encoded.' }"
+          echo $base64Encoded > data.b64 && certutil -decode data.b64 server.key
 
       - name: extractSFCLI
         run: |
