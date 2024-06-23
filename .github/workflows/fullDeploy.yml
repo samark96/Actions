@@ -45,7 +45,7 @@ jobs:
       - name: sfJWTAuth
         run: |
           dir
-          ./sf/bin/sf org login jwt --username $userName --jwt-key-file=server.key --client-id $clientId --instance-url $instanceURL --alias $orgAlias
+          ./sf/bin/sf org login jwt --username $userName --jwt-key-file=".\server.key" --client-id $clientId --instance-url $instanceURL --alias $orgAlias
 
       - name: deltaDeploy
         shell: pwsh
