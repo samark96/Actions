@@ -23,7 +23,7 @@ if ($diffs.Count -gt 0) {
                 If($change.Contains(".")){ $processedChanges.add($change) > $null
                 } else { Write-Host "Just a folder : $change" }
                
-            } else { Write-Host "Support file : $k" }
+            } else { Write-Host "Support/deleted file : $k" }
         }
 } else { Write-Host "No file changes" }
 Write-Host "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
