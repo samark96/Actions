@@ -11,7 +11,7 @@ on:
 jobs:
   fullDeploy:
     runs-on: windows-latest
-    #environment: prod
+    environment: ${{ inputs.environment }}
     env:
       userName: ${{ vars.userName }}
       consumerKey: ${{ vars.consumerKey }}
