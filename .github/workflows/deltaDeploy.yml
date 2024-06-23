@@ -55,5 +55,4 @@ jobs:
         run: |
           gh variable set fromCommitId --body "$env:latestCommitId" --env prod
 #$latestCommit = $env:latestCommitId
-#./build/customScripts/updateVariable.ps1 -commitId $latestCommit
-          
+#./build/customScripts/updateVariable.ps1 -commitId $latestCommit          
