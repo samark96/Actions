@@ -39,14 +39,15 @@ jobs:
           dir
           set FILE_PATH=.\server.key
         
-          if [ -f "$FILE_PATH" ]; then
-          echo "File exists: $FILE_PATH"
-          echo "Checking permissions:"
-          echo "---------------------"
-          icacls "$FILE_PATH"
-          else
-          echo "File does not exist: $FILE_PATH"
-          fi
+          rem Check if the file exists
+          if exist "%FILE_PATH%" (
+          echo File exists: "%FILE_PATH%"
+          echo Checking permissions:
+          echo ---------------------
+          icacls "%FILE_PATH%"
+          ) else (
+          echo File does not exist: "%FILE_PATH%"
+          )
 
       - name: extractSFCLI
         run: |
