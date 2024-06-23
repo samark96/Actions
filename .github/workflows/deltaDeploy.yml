@@ -7,7 +7,7 @@ on:
     #  -  'force-app/**'  
   workflow_dispatch:
 env:
-  personalToken: ${{ secrets.personalToken }}
+  GH_TOKEN: ${{ secrets.personalToken }}
 
 jobs:
   deltaDeploy:
@@ -54,3 +54,4 @@ jobs:
         run: |
           $latestCommit = $env:latestCommitId
           ./build/customScripts/updateVariable.ps1 -commitId $latestCommit
+          gh variable set fromCommitId=$commitId --env prod
