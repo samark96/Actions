@@ -44,10 +44,9 @@ jobs:
 
       - name: sfJWTAuth
         run: |
-          echo "client id is: ${{ env.consumerKey }}"
-          ./sf/bin/sf org login jwt --username $userName --jwt-key-file=server.key --client-id ${{ env.consumerKey }} --instance-url $instanceURL --alias $orgAlias
+          ./sf/bin/sf org login jwt --username ${{ env.userName }} --jwt-key-file=server.key --client-id ${{ env.consumerKey }} --instance-url ${{ env.instanceURL }} --alias ${{ env.orgAlias }}
 
       - name: deltaDeploy
         shell: pwsh
         run: |
-          ./sf/bin/sf project deploy start -o $orgAlias -l $testLevel --source-dir $sourcePath -w $deployWait
+          ./sf/bin/sf project deploy start -o ${{ env.orgAlias }} -l ${{ env.testLevel }} --source-dir ${{ env.sourcePath }} -w ${{ env.deployWait }}
