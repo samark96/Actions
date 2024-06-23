@@ -28,7 +28,7 @@ if ($diffs.Count -gt 0) {
 } else { Write-Host "No file changes" }
 Write-Host "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
  
-$processedChangesFilePath = "$HOME\build\processedChanges.txt"
+$processedChangesFilePath = ".\build\processedChanges.txt"
 if(($processedChanges.Count -gt 0) -and ($processedChanges.Where({ $_ -ne "" }))){
     $processedChanges |  Out-File $processedChangesFilePath
  
@@ -38,7 +38,7 @@ if(($processedChanges.Count -gt 0) -and ($processedChanges.Where({ $_ -ne "" }))
 }
  
 #Extract Specified Test Classes
-$xPath = $HOME
+$xPath = "."
 $path = "$xPath\force-app\main\default"
 $testClasses = New-Object System.Collections.ArrayList
 if(($processedChanges.Count -gt 0) -and ($processedChanges.Where({ $_ -ne "" }))){
@@ -146,7 +146,7 @@ if(($processedChanges.Count -gt 0) -and ($processedChanges.Where({ $_ -ne "" }))
         $uniqueItems = $items | Select-Object -Unique
         $specifiedClasses = $uniqueItems -join ','
     }
-    $testClassFilePath = "$HOME\build\specifyTestClasses.txt"
+    $testClassFilePath = ".\build\specifyTestClasses.txt"
     if(($specifiedClasses.Count -gt 0) -and ($specifiedClasses.Where({ $_ -ne "" }))){
         $specifiedClasses |  Out-File $testClassFilePath -Encoding UTF8
     } else {
