@@ -12,7 +12,7 @@ env:
 jobs:
   deltaDeploy:
     runs-on: windows-latest
-    environment: qa #pass it in a variable if manually triggered.
+    environment: qa #Environment and orgAlias variable should be exactly the same.
     env:
       fromCommitId: ${{ vars.fromCommitId }}
       userName: ${{ vars.userName }}
@@ -64,4 +64,4 @@ jobs:
       - name: updateVariable
         shell: pwsh
         run: |
-          gh variable set fromCommitId --body "$env:latestCommitId" --env qa        
+          gh variable set fromCommitId -b "$env:latestCommitId" -e ${{ env.orgAlias }}
