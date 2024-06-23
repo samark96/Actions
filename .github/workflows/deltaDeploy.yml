@@ -60,6 +60,4 @@ jobs:
       - name: updateVariable
         shell: pwsh
         run: |
-          gh variable set fromCommitId --body "$env:latestCommitId" --env ${{ matrix.environment }}
-#$latestCommit = $env:latestCommitId
-#./build/customScripts/updateVariable.ps1 -commitId $latestCommit          
+          gh variable set fromCommitId --body "$env:latestCommitId" --env ${{ matrix.environment }}         
