@@ -13,7 +13,7 @@ jobs:
   deltaDeploy:
     runs-on: windows-latest
     environment: 
-      name: ${{ vars.orgAlias }}
+      name: qa
     env:
       fromCommitId: ${{ vars.fromCommitId }}
       userName: ${{ vars.userName }}
@@ -66,4 +66,4 @@ jobs:
         shell: pwsh
         run: |
           echo "printing env  ${{ job.environment.name }} variable"
-          gh variable set fromCommitId -b "$env:latestCommitId" -e "${{ env.orgAlias }}"
+          gh variable set fromCommitId -b "$env:latestCommitId" -e ${{ env.orgAlias }}
