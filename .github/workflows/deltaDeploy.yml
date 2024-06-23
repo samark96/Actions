@@ -64,5 +64,5 @@ jobs:
       - name: updateVariable
         shell: pwsh
         run: |
-          echo "printing env  ${{ job.environment }} variable"
-          gh variable set fromCommitId --body "$env:latestCommitId" --env ${{ job.environment }}
+          echo "printing env  '${{ job.environment }}' variable"
+          gh variable set fromCommitId -b "$env:latestCommitId" -e "${{ job.environment }}"
