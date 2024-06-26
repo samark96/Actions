@@ -1,7 +1,7 @@
 {
     "force-app": {
            
-           "DataDictionaryFields_Batch": "HelloWorldTrigger",
-           "DataDictionaryObjects": "DataDictionarySchedule_Batch,HttpClass,HelloWorldTrigger"
+           "DataDictionaryFields_Batch": "HelloWorldTriggerTest",
+           "DataDictionaryObjects": "DataDictionarySchedule_BatchTest,HttpClass,HelloWorldTriggerTest"
        }
   }
