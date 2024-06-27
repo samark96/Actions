@@ -1,12 +1,20 @@
 name: fullDeploy
 
 on:
+  push:
+    branches: [ "qa" ]
+    paths:
+      -  'force-app/**' 
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Deployment Environment'
-        type: environment
+        description: 'Deploy Environment'
+        type: choice
         required: true
+        default: uat
+        options:
+          - uat
+          - prod
 
 jobs:
   fullDeploy:
@@ -37,7 +45,12 @@ jobs:
       - name: extractSFCLI
         run: |
           tar -xzvf build/sf-win32-x64.tar.gz
-
+      
+      - name: installSFCLI
+        run: |
+          npm install sfdx-cli@latest-rc --global
+          sf --version
+      
       - name: sfJWTAuth
         run: |
           echo "$env:secureKey" > secure.key
