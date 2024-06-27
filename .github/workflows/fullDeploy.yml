@@ -2,7 +2,7 @@ name: fullDeploy
 
 on:
   push:
-    branches: [ "qa" ]
+    branches: [ "develop" ]
     paths:
       -  'force-app/**' 
   workflow_dispatch:
