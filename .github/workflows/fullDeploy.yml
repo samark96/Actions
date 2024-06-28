@@ -42,14 +42,14 @@ jobs:
           git config --global user.email "GitHub@mass.gov"
           git config --global user.name "GitHub User"
 
-      #- name: extractSFCLI
-      #  run: |
-      #    tar -xzvf build/sf-win32-x64.tar.gz
-      
-      - name: installSFCLI
+      - name: extractSFCLI
         run: |
-          npm install @salesforce/cli --global
-          sf --version
+          tar -xzvf build/sf-win32-x64.tar.gz
+      
+      #- name: installSFCLI
+      #  run: |
+      #    npm install @salesforce/cli --global
+      #    sf --version
       
       - name: sfJWTAuth
         run: |
