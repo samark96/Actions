@@ -22,13 +22,13 @@ jobs:
     environment: ${{ github.event.inputs.environment }}
     env:
       userName: ${{ vars.userName }}
-      consumerKey: ${{ vars.consumerKey }}
       instanceURL: ${{ vars.instanceURL }}
       orgAlias: ${{ vars.orgAlias }}
       testLevel: ${{ vars.testLevel }}
       sourcePath: ${{ vars.sourcePath }}
       deployWait: ${{ vars.deployWait }}
       secureKey: ${{ secrets.secureKey }}
+      consumerKey: ${{ secrets.consumerKey }}
 
     steps:
       - name: checkoutSourceCode
