@@ -23,6 +23,7 @@ jobs:
       targetPath: ${{ vars.targetPath }}
       deployWait: ${{ vars.deployWait }}
       secureKey: ${{ secrets.secureKey }}
+      consumerKey: ${{ secrets.consumerKey }}
 
     steps:
       - name: checkoutSourceCode
