@@ -5,7 +5,7 @@
     <label>SCRT2 Integration User</label>
     <license>Cloud Integration User</license>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
