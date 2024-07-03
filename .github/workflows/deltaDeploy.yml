@@ -16,7 +16,7 @@ jobs:
     env:
       fromCommitId: ${{ vars.fromCommitId }}
       userName: ${{ vars.userName }}
-      consumerKey: ${{ vars.consumerKey }}
+     
       instanceURL: ${{ vars.instanceURL }}
       orgAlias: ${{ vars.orgAlias }}
       deltaDeploytestLevel: ${{ vars.deltaDeploytestLevel }}
