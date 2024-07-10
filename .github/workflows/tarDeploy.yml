@@ -16,6 +16,8 @@ on:
         default: dev
         options:
           - dev
+          - uat
+          - prod
 
 jobs:
   fullDeploy:
