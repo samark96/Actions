@@ -1,0 +1,57 @@
+#Using Ubantu runner image & TAR install for SF CLI
+
+name: tarDeploy
+
+on:
+  push:
+    branches: [ "dev" ]
+    paths:
+      -  'force-app/**' 
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deploy Environment'
+        type: choice
+        required: true
+        default: dev
+        options:
+          - dev
+
+jobs:
+  fullDeploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    env:
+      userName: ${{ vars.userName }}
+      instanceURL: ${{ vars.instanceURL }}
+      orgAlias: ${{ vars.orgAlias }}
+      testLevel: ${{ vars.testLevel }}
+      sourcePath: ${{ vars.sourcePath }}
+      deployWait: ${{ vars.deployWait }}
+      secureKey: ${{ secrets.secureKey }}
+      consumerKey: ${{ secrets.consumerKey }}
+
+    steps:
+      - name: checkoutSourceCode
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: configureGIT
+        run: |
+          git config --global --add safe.directory /__w/Actions/Actions
+          git config --global user.email "GitHub@mass.gov"
+          git config --global user.name "GitHub User"
+
+      - name: extractSFCLI
+        run: |
+          tar -xzvf build/sf-win32-x64.tar.gz
+      
+      - name: sfJWTAuth
+        run: |
+          echo "$env:secureKey" > secure.key
+          sf org login jwt --username ${{ env.userName }} --jwt-key-file=secure.key --client-id ${{ env.consumerKey }} --instance-url ${{ env.instanceURL }} --alias ${{ env.orgAlias }}
+
+      - name: sfDeploy
+        run: |
+          sf project deploy start -o ${{ env.orgAlias }} -l ${{ env.testLevel }} --source-dir ${{ env.sourcePath }} -w ${{ env.deployWait }}
