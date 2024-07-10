@@ -51,7 +51,7 @@ jobs:
       
       - name: sfJWTAuth
         run: |
-          echo "$env:secureKey" > secure.key
+          echo {{ $env:secureKey }} > secure.key
           ./sf/bin/sf org login jwt --username ${{ env.userName }} --jwt-key-file=secure.key --client-id ${{ env.consumerKey }} --instance-url ${{ env.instanceURL }} --alias ${{ env.orgAlias }}
 
       - name: sfDeploy
