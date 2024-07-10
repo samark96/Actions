@@ -39,7 +39,6 @@ jobs:
 
       - name: configureGIT
         run: |
-          git config --global --add safe.directory /__w/Actions/Actions
           git config --global user.email "GitHub@mass.gov"
           git config --global user.name "GitHub User"
 
@@ -50,7 +49,7 @@ jobs:
       
       - name: sfJWTAuth
         run: |
-          echo "$env:secureKey" > secure.key
+          echo "${{ secrets.secureKey }}" > secure.key
           sf org login jwt --username ${{ env.userName }} --jwt-key-file=secure.key --client-id ${{ env.consumerKey }} --instance-url ${{ env.instanceURL }} --alias ${{ env.orgAlias }}
 
       - name: sfDeploy
