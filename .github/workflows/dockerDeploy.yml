@@ -4,7 +4,7 @@ name: dockerDeploy
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "main" ]
     paths:
       -  'force-app/**' 
   workflow_dispatch:

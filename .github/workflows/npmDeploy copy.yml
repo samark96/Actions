@@ -1,10 +1,10 @@
-#Using Ubantu runner image & TAR install for SF CLI
+#Using Ubantu runner image & npm install for SF CLI
 
-name: tarDeploy
+name: npmDeploy
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev"]
     paths:
       -  'force-app/**' 
   workflow_dispatch:
@@ -13,9 +13,9 @@ on:
         description: 'Deploy Environment'
         type: choice
         required: true
-        default: dev
+        default: qa
         options:
-          - dev
+          - qa
           - uat
           - prod
 
@@ -44,15 +44,16 @@ jobs:
           git config --global user.email "GitHub@mass.gov"
           git config --global user.name "GitHub User"
 
-      - name: extractSFCLI
+      - name: installSFCLI
         run: |
-          tar -xzvf build/sf-win32-x64.tar.gz
+          npm install @salesforce/cli --global
+          sf --version
       
       - name: sfJWTAuth
         run: |
           echo "${{ secrets.secureKey }}" > secure.key
-          ./sf/bin/sf org login jwt --username ${{ env.userName }} --jwt-key-file=secure.key --client-id ${{ env.consumerKey }} --instance-url ${{ env.instanceURL }} --alias ${{ env.orgAlias }}
+          sf org login jwt --username ${{ env.userName }} --jwt-key-file=secure.key --client-id ${{ env.consumerKey }} --instance-url ${{ env.instanceURL }} --alias ${{ env.orgAlias }}
 
       - name: sfDeploy
         run: |
-          ./sf/bin/sf project deploy start -o ${{ env.orgAlias }} -l ${{ env.testLevel }} --source-dir ${{ env.sourcePath }} -w ${{ env.deployWait }}
+          sf project deploy start -o ${{ env.orgAlias }} -l ${{ env.testLevel }} --source-dir ${{ env.sourcePath }} -w ${{ env.deployWait }}
