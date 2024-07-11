@@ -23,6 +23,8 @@ on:
 jobs:
   fullDeploy:
     runs-on: ubuntu-latest
+    env:
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
     steps:
       - name: checkoutSourceCode
         uses: actions/checkout@v4
