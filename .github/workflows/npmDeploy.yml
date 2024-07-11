@@ -4,7 +4,7 @@ name: npmDeploy
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "dev"]
     paths:
       -  'force-app/**' 
   workflow_dispatch:
@@ -13,9 +13,10 @@ on:
         description: 'Deploy Environment'
         type: choice
         required: true
-        default: dev
+        default: uat
         options:
-          - dev
+          - uat
+          - prod
 
 jobs:
   fullDeploy:
